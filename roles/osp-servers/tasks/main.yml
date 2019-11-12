@@ -15,6 +15,10 @@
   os_floating_ip:
     cloud: ospcloud
     server: "{{ item.value.name }}"
+    network: ext_network
+    reuse: yes
+    wait: yes
+    state: present
   with_dict: "{{ osp_servers }}"
 
 
