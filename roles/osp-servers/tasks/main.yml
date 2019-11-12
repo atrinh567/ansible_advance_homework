@@ -2,21 +2,34 @@
 - name: Create new server instances and attaches them a network and passes metadata to the instance
   os_server:
     state: present
-    name: vm1
+    name: "{{ item.name }}".example.opentlc.com
     image: rhel-guest
     key_name: ansible_ssh
     timeout: 200
     flavor: m2.small
-    nics:
-      - net-name: ext_network
-      - net-name: int_network
+    network: "{{ item.network_name }}"
     meta:
-      hostname: vm1
+      hostname: "{{ item.name }}".example.opentlc.com
+  loop:
+    - {name: frontend1, network_name: int_network }
+    - {name: app1, network_name: int_network }
+    - {name: app2, network_name: int_network }
+    - {name: appdb1, network_name: int_network }
 
 - name: Add floating IP to Servers
   os_floating_ip:
     cloud: ospcloud
-    server: vm1
+    server: "{{ item }}"
+  loop:
+    - frontend1
+    - app1
+    - app2
+    - appdb1
 
-- name: Wait for server to be available
-  wait_for_connection:
+# - name: Wait for servers to be available
+#   wait_for_connection:
+#   loop:
+#     - frontend1
+#     - app1
+#     - app2
+#     - appdb1
