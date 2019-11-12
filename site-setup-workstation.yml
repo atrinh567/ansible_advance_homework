@@ -1,9 +1,8 @@
 # Playbook to setup workstation as isolated node and create osp network, router, SG and ssh keypair
 - name: set up workstation as isolated node and network
   hosts: workstation
-  become: yes
+  become: no
   roles:
     - setup-workstation
 
-- import_playbook: site-install-isolated-node.yml 
-
+- import_playbook: site-install-isolated-node.yml
