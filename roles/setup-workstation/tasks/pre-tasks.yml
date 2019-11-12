@@ -1,5 +1,9 @@
+- debug:
+    msg: "{{ lookup('env', 'USER') }}"
+
 - name: yum clean
   shell: yum clean all
+  warn: false
 - name: install pip
   yum:
     name:
