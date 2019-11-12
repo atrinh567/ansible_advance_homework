@@ -19,7 +19,7 @@
 - name: Add floating IP to Servers
   os_floating_ip:
     cloud: ospcloud
-    server: "{{ item }}"
+    server: "{{ item }}.example.opentlc.com"
   loop:
     - frontend1
     - app1
