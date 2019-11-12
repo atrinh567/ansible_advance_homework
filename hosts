@@ -1,3 +1,6 @@
+[all:vars]
+OSP_GUID=lookup('env','OSP_GUID')
+
 [workstation]
 workstation-{{OSP_GUID}}.rhpds.opentlc.com ansible_ssh_private_key=/root/.ssh/openstack.pem ansible_ssh_user=cloud-user
 
