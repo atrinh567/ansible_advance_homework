@@ -9,6 +9,8 @@
     security_groups: "{{ item.value.security_group }}"
     network: int_network
     meta: "{{ item.value.meta[0] }}"
+    wait: yes
+    register: "{{ item.value.name }}"
   with_dict: "{{ osp_servers }}"
 
 - name: Add floating IP to Servers
@@ -16,6 +18,14 @@
     cloud: ospcloud
     server: "{{ item.value.name }}"
   with_dict: "{{ osp_servers }}"
+
+- name: Wait for SSH
+  command: >
+    ssh {{ frontend.server.public_v4 }}
+  register: result
+  until: result|sucess
+  retries: 10
+  delay: 10
 
 # - name: Wait for servers to be available
 #   wait_for_connection:
