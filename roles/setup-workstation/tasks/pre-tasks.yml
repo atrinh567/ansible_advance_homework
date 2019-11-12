@@ -3,6 +3,7 @@
 
 - name: yum clean
   shell: yum clean all
+  args:
     warn: no
 - name: install pip
   yum:
