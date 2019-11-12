@@ -7,6 +7,7 @@
     key_name: "{{ item.value.key_name }}"
     flavor: "{{ item.value.flavor }}"
     security_groups: "{{ item.value.security_group }}"
+    network: int_network
     meta: "{{ item.value.meta[0] }}"
   with_dict: "{{ osp_servers }}"
 
