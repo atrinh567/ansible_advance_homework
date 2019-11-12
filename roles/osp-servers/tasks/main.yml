@@ -9,7 +9,6 @@
     security_groups: "{{ item.value.security_group }}"
     network: int_network
     meta: "{{ item.value.meta[0] }}"
-    wait: yes
     register: "{{ item.value.name }}"
   with_dict: "{{ osp_servers }}"
 
