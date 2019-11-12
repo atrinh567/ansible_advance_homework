@@ -7,18 +7,14 @@
     key_name: "{{ item.value.key_name }}"
     flavor: "{{ item.value.flavor }}"
     security_groups: "{{ item.value.security_group }}"
-    meta: "{{ item.value.meta }}"
+    meta: "{{ item.value.meta[0] }}"
   with_dict: "{{ osp_servers }}"
 
 - name: Add floating IP to Servers
   os_floating_ip:
     cloud: ospcloud
-    server: "{{ item }}.example.opentlc.com"
-  loop:
-    - frontend1
-    - app1
-    - app2
-    - appdb1
+    server: "{{ item.value.name }}"
+  with_dict: "{{ osp_servers }}"
 
 # - name: Wait for servers to be available
 #   wait_for_connection:
