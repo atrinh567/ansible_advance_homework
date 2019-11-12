@@ -21,7 +21,6 @@
 
 - name: Add hosts to inventory
   add_host:
-    name: "{{ item['openstack']['human_id'] }}"
     groups: "{{ item['item']['meta']['group'] }}"
     ansible_host: "{{ item.openstack.accessIPv4 }}"
   with_items: "{{ os_server_hosts.results }}"
