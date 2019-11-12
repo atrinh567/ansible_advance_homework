@@ -19,11 +19,8 @@
     server: "{{ item.value.name }}"
   with_dict: "{{ osp_servers }}"
 
-- name: Add hosts to inventory
-  add_host:
-    groups: "{{ item['item']['meta']['group'] }}"
-    ansible_host: "{{ item.openstack.accessIPv4 }}"
-  with_items: "{{ os_server_hosts.results }}"
+- debug:
+    var: os_server_hosts
 
 # - name: Wait for servers to be available
 #   wait_for_connection:
