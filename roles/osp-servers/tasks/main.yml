@@ -10,8 +10,6 @@
     network: int_network
     meta: "{{ item.value.meta[0] }}"
   with_dict: "{{ osp_servers }}"
-  register: "os_server_hosts"
-
 
 - name: Add floating IP to Servers
   os_floating_ip:
@@ -19,16 +17,5 @@
     server: "{{ item.value.name }}"
   with_dict: "{{ osp_servers }}"
 
-- name: Add hosts to inventory
-  add_host:
-    groups: "{{ item.meta.group }}"
-    ansible_host: "{{ item.openstack.accessIPv4 }}"
-  with_items: "{{ os_server_hosts.results }}"
 
 # - name: Wait for servers to be available
-#   wait_for_connection:
-#   loop:
-#     - frontend1
-#     - app1
-#     - app2
-#     - appdb1
