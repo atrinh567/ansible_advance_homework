@@ -21,5 +21,11 @@
     state: present
   with_dict: "{{ osp_servers }}"
 
+- name: Get server facts
+  os_server_facts:
+    cloud: ospcloud
+  register: osp_facts
 
+- debug:
+    var: osp_facts
 # - name: Wait for servers to be available
