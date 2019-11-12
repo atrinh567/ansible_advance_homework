@@ -2,14 +2,14 @@
 - name: Create new server instances and attaches them a network and passes metadata to the instance
   os_server:
     state: present
-    name: "{{ item.name }}".example.opentlc.com
+    name: "{{ item.name }}.example.opentlc.com"
     image: rhel-guest
     key_name: ansible_ssh
     timeout: 200
     flavor: m2.small
     network: "{{ item.network_name }}"
     meta:
-      hostname: "{{ item.name }}".example.opentlc.com
+      hostname: "{{ item.name }}.example.opentlc.com"
   loop:
     - {name: frontend1, network_name: int_network }
     - {name: app1, network_name: int_network }
