@@ -9,8 +9,9 @@
     security_groups: "{{ item.value.security_group }}"
     network: int_network
     meta: "{{ item.value.meta[0] }}"
-    register: "{{ item.value.name }}"
   with_dict: "{{ osp_servers }}"
+  register: "os_server_hosts"
+
 
 - name: Add floating IP to Servers
   os_floating_ip:
@@ -18,13 +19,12 @@
     server: "{{ item.value.name }}"
   with_dict: "{{ osp_servers }}"
 
-- name: Wait for SSH
-  command: >
-    ssh {{ frontend.server.public_v4 }}
-  register: result
-  until: result|sucess
-  retries: 10
-  delay: 10
+- name: Add hosts to inventory
+  add_host:
+    name: "{{ item['openstack']['human_id'] }}"
+    groups: "{{ item['item']['meta']['group'] }}"
+    ansible_host: "{{ item.openstack.accessIPv4 }}"
+  with_items: "{{ os_server_hosts.results }}"
 
 # - name: Wait for servers to be available
 #   wait_for_connection:
