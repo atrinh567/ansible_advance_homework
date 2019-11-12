@@ -1,0 +1,7 @@
+- hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Run Ansible Tower setup
+    shell: /root/ansible-tower-setup-latest/setup.sh
+    async: 3600
+    poll: 36

@@ -1,0 +1,22 @@
+---
+- name: Create new server instances and attaches them a network and passes metadata to the instance
+  os_server:
+    state: present
+    name: vm1
+    image: rhel-guest
+    key_name: ansible_ssh
+    timeout: 200
+    flavor: m2.small
+    nics:
+      - net-name: ext_network
+      - net-name: int_network
+    meta:
+      hostname: vm1
+
+- name: Add floating IP to Servers
+  os_floating_ip:
+    cloud: ospcloud
+    server: vm1
+
+- name: Wait for server to be available
+  wait_for_connection:
