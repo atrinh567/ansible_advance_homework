@@ -1,15 +1,15 @@
 ---
-- name: Create new server instances and attaches them a network and passes metadata to the instance
-  os_server:
-    state: "{{ item.value.state }}"
-    name: "{{ item.value.name }}"
-    image: "{{ item.value.image }}"
-    key_name: "{{ item.value.key_name }}"
-    flavor: "{{ item.value.flavor }}"
-    security_groups: "{{ item.value.security_group }}"
-    network: int_network
-    meta: "{{ item.value.meta[0] }}"
-  with_dict: "{{ osp_servers }}"
+# - name: Create new server instances and attaches them a network and passes metadata to the instance
+#   os_server:
+#     state: "{{ item.value.state }}"
+#     name: "{{ item.value.name }}"
+#     image: "{{ item.value.image }}"
+#     key_name: "{{ item.value.key_name }}"
+#     flavor: "{{ item.value.flavor }}"
+#     security_groups: "{{ item.value.security_group }}"
+#     network: int_network
+#     meta: "{{ item.value.meta[0] }}"
+#   with_dict: "{{ osp_servers }}"
 
 - name: Add floating IP to Servers
   os_floating_ip:
