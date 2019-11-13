@@ -11,22 +11,26 @@
 #     meta: "{{ item.value.meta[0] }}"
 #   with_dict: "{{ osp_servers }}"
 
-- name: Add floating IP to Servers
-  os_floating_ip:
-    cloud: ospcloud
-    server: "{{ item.value.name }}"
-    network: ext_network
-    reuse: yes
-    wait: yes
-    state: present
-  with_dict: "{{ osp_servers }}"
-  register: osp_floating_ip
-
-- name: SSH Ready
+- name: whoami
   command: >
-    "ssh -i /root/.ssh/test_id_rsa cloud-user@{{ item.floating_ip.floating_ip_address }} exit; wait; echo $?"
-  with_items: "{{osp_floating_ip.results}}"
-  register: result
-  until: result.rc == 0
-  retries: 5
-  delay: 10
+    "echo $(whoami)"
+
+# - name: Add floating IP to Servers
+#   os_floating_ip:
+#     cloud: ospcloud
+#     server: "{{ item.value.name }}"
+#     network: ext_network
+#     reuse: yes
+#     wait: yes
+#     state: present
+#   with_dict: "{{ osp_servers }}"
+#   register: osp_floating_ip
+
+# - name: SSH Ready
+#   command: >
+#     "ssh -i /root/.ssh/test_id_rsa cloud-user@{{ item.floating_ip.floating_ip_address }} exit; wait; echo $?"
+#   with_items: "{{osp_floating_ip.results}}"
+#   register: result
+#   until: result.rc == 0
+#   retries: 5
+#   delay: 10
