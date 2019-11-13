@@ -8,6 +8,10 @@
     flavor: "{{ item.value.flavor }}"
     security_groups: "{{ item.value.security_group }}"
     network: int_network
+    userdata: |
+      {%- raw -%}#!/bin/bash
+      echo 
+      {% endraw %}
     meta: "{{ item.value.meta[0] }}"
   with_dict: "{{ osp_servers }}"
 
@@ -25,4 +29,13 @@
 - name: Floating IPs
   debug:
     var: "{{ item.floating_ip.floating_ip_address }}"
+  with_items: "{{osp_floating_ip.results}}"
+
+- name: wait until instances are SSH ready
+  wait_for:
+    port: 22
+    host: "{{ item.floating_ip.floating_ip_address }}"
+    search_regex: OpenSSH
+    delay: 5
+    timeout: 30
   with_items: "{{osp_floating_ip.results}}"
