@@ -9,12 +9,6 @@
     security_groups: "{{ item.value.security_group }}"
     network: int_network
     meta: "{{ item.value.meta[0] }}"
-    userdata: |
-      #!/bin/bash
-      curl -o /tmp/openstack.pub http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pub
-      cat /tmp/openstack.pub >> /home/cloud-user/.ssh/authorized_keys
-      curl -o /tmp/internal.repo http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
-      cp /tmp/internal.repo /etc/yum.repos.d/internal.repo
   with_dict: "{{ osp_servers }}"
 
 - name: Add floating IP to Servers
@@ -32,12 +26,12 @@
   debug:
     var: osp_floating_ip
 
-- name: Wait for servers to be available
-  wait_for:
-    port: 22
-    host: "{{item.floating_ip.floating_ip_address}}"
-    search_regex: OpenSSH
-    timeout: 60
-    delay: 10
-  with_items: "{{osp_floating_ip.results}}"
-  delegate_to: "{{ inventory_hostname }}"
+# - name: Wait for servers to be available
+#   wait_for:
+#     port: 22
+#     host: "{{item.floating_ip.floating_ip_address}}"
+#     search_regex: OpenSSH
+#     timeout: 60
+#     delay: 10
+#   with_items: "{{osp_floating_ip.results}}"
+#   delegate_to: "{{ inventory_hostname }}"
