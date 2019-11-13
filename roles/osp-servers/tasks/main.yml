@@ -28,6 +28,6 @@
     -oStrictHostKeyChecking=no cloud-user@{{ item.floating_ip.floating_ip_address }} true"
   with_items: "{{osp_floating_ip.results}}"
   register: result
-  until: result|success
+  until: result.rc == 0
   retries: 5
   delay: 10
