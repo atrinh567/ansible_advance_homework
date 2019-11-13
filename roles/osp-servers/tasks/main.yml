@@ -12,9 +12,10 @@
 #   with_dict: "{{ osp_servers }}"
 
 - name: whoami
-  command: >
-    "echo $(whoami)"
+  local_action: command whoami
+  register: username_on_the_host
 
+- debug: var=username_on_the_host
 # - name: Add floating IP to Servers
 #   os_floating_ip:
 #     cloud: ospcloud
