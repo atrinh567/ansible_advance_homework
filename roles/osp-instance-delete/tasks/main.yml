@@ -7,7 +7,7 @@
 
 - name: openstack server info
   debug:
-    var: "{{ result }}"
+    var: openstack_servers
 
 # - name: Delete instances
   
