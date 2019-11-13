@@ -24,14 +24,5 @@
 
 - name: Floating IPs
   debug:
-    var: osp_floating_ip
-
-# - name: Wait for servers to be available
-#   wait_for:
-#     port: 22
-#     host: "{{item.floating_ip.floating_ip_address}}"
-#     search_regex: OpenSSH
-#     timeout: 60
-#     delay: 10
-#   with_items: "{{osp_floating_ip.results}}"
-#   delegate_to: "{{ inventory_hostname }}"
+    var: "{{ item.floating_ip.floating_ip_address }}"
+  with_items: "{{osp_floating_ip.results}}"
