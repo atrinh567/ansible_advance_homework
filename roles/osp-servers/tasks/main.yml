@@ -20,17 +20,17 @@
     wait: yes
     state: present
   with_dict: "{{ osp_servers }}"
+  register: osp_floating_ip
 
-- name: Get server facts
-  os_server_facts:
-    cloud: ospcloud
-  register: osp_facts
+- name: Floating IPs
+  debug:
+    var: osp_floating_ip
 
-- name: Wait for servers to be available
-  wait_for:
-    port: 22
-    host: "{{item.accessIPv4}}"
-    search_regex: OpenSSH
-    delay: 10
-  with_items: "{{osp_facts.ansible_facts.openstack_servers}}"
-  delegate_to: "{{ inventory_hostname }}"
+# - name: Wait for servers to be available
+#   wait_for:
+#     port: 22
+#     host: "{{item.accessIPv4}}"
+#     search_regex: OpenSSH
+#     delay: 10
+#   with_items: "{{osp_facts.ansible_facts.openstack_servers}}"
+#   delegate_to: "{{ inventory_hostname }}"
