@@ -8,10 +8,6 @@
     flavor: "{{ item.value.flavor }}"
     security_groups: "{{ item.value.security_group }}"
     network: int_network
-    userdata: |
-      {%- raw -%}#!/bin/bash
-      echo 
-      {% endraw %}
     meta: "{{ item.value.meta[0] }}"
   with_dict: "{{ osp_servers }}"
 
