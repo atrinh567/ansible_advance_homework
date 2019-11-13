@@ -30,4 +30,3 @@
     delay: 5
     timeout: 30
   with_items: "{{osp_floating_ip.results}}"
-  delegate_to: "{{ inventory_hostname }}"
