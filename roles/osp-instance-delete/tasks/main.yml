@@ -13,4 +13,4 @@
   os_server:
     name: "{{ item.hostname }}"
     state: absent
-  loop: openstack_servers
+  loop: "{{ openstack_servers }}"
