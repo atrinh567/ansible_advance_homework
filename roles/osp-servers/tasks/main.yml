@@ -11,11 +11,6 @@
 #     meta: "{{ item.value.meta[0] }}"
 #   with_dict: "{{ osp_servers }}"
 
-- name: whoami
-  local_action: command whoami
-  register: username_on_the_host
-
-- debug: var=username_on_the_host
 # - name: Add floating IP to Servers
 #   os_floating_ip:
 #     cloud: ospcloud
@@ -27,11 +22,12 @@
 #   with_dict: "{{ osp_servers }}"
 #   register: osp_floating_ip
 
-# - name: SSH Ready
-#   command: >
-#     "ssh -i /root/.ssh/test_id_rsa cloud-user@{{ item.floating_ip.floating_ip_address }} exit; wait; echo $?"
-#   with_items: "{{osp_floating_ip.results}}"
-#   register: result
-#   until: result.rc == 0
-#   retries: 5
-#   delay: 10
+- name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
+  wait_for:
+    port: 22
+    host: "{{ item.floating_ip.floating_ip_address }}"
+    search_regex: OpenSSH
+    delay: 5
+    timeout: 30
+  with_items: "{{osp_floating_ip.results}}"
+  connection: local
