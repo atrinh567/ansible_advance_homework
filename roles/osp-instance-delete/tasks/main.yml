@@ -9,5 +9,8 @@
   debug:
     var: openstack_servers
 
-# - name: Delete instances
-  
+- name: delete instances
+  os_server:
+    name: "{{ openstack_servers.hostname }}"
+    state: absent
+  loop: openstack_servers
