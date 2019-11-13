@@ -11,6 +11,6 @@
 
 - name: delete instances
   os_server:
-    name: "{{ openstack_servers.hostname }}"
+    name: "{{ item.hostname }}"
     state: absent
   loop: openstack_servers
