@@ -22,16 +22,12 @@
   with_dict: "{{ osp_servers }}"
   register: osp_floating_ip
 
-- name: Floating IPs
-  debug:
-    var: "{{ item.floating_ip.floating_ip_address }}"
+- name: SSH Ready
+  command: >
+    "ssh -i /root/.ssh/test_id_rsa -oBatchMode=yes 
+    -oStrictHostKeyChecking=no cloud-user@{{ value.floating_ip.floating_ip_address }} true"
   with_items: "{{osp_floating_ip.results}}"
-
-- name: wait until instances are SSH ready
-  wait_for:
-    port: 22
-    host: "{{ item.floating_ip.floating_ip_address }}"
-    search_regex: OpenSSH
-    delay: 5
-    timeout: 30
-  with_items: "{{osp_floating_ip.results}}"
+  register: result
+  until: result|success
+  retries: 5
+  delay: 10
