@@ -8,6 +8,10 @@
     flavor: "{{ item.value.flavor }}"
     security_groups: "{{ item.value.security_group }}"
     network: int_network
+    userdata: |
+      #!/bin/bash
+      curl -o /tmp/internal.repo http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
+      cp /tmp/internal.repo /etc/yum.repos.d/internal.repo
     meta: "{{ item.value.meta[0] }}"
   with_dict: "{{ osp_servers }}"
 
