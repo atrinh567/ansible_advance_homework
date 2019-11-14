@@ -1,2 +1,13 @@
 ---
 # handlers file for app-tier
+- name: start apache
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+    
+- name: enable and start tomcat
+  service:
+    name: tomcat
+    state: started
+    enabled: yes

@@ -1,0 +1,8 @@
+---
+# tasks file for install_apache
+- name: install apache
+  yum:
+    name: httpd
+    state: latest
+  notify: start apache
+...

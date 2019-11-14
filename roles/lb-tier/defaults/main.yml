@@ -1,2 +1,5 @@
 ---
 # defaults file for lb-tier
+packages:
+  - haproxy
+...

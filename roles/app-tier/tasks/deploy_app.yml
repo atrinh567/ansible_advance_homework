@@ -1,0 +1,12 @@
+---
+# tasks file for deploy_app
+- name: Create directory
+  file:
+    path: "{{ ansible_tomcat_path }}"
+    state: directory
+
+- name: Copy static index.html to app servers
+  template:
+    src: index.html.j2
+    dest: "{{ansible_tomcat_path }}/index.html"
+...

@@ -1,0 +1,19 @@
+---
+# tasks file for install_tomcat
+- name: install tomcat
+  package:
+    name: "{{ ansible_tomcat_packages }}"
+    state: latest
+
+- name: create ansible tomcat directory
+  file:
+    path: "{{ ansible_tomcat_dir }}"
+    state: directory
+
+- name: copy static index.html to tomcat webapps/ansible/index.html
+  template:
+    src: index.html.j2
+    dest: "{{ ansible_tomcat_dir }}/index.html"
+    mode: 0644
+  notify: enable and start tomcat
+...
