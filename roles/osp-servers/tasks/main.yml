@@ -28,5 +28,5 @@
     host: "{{ item.floating_ip.floating_ip_address }}"
     search_regex: OpenSSH
     delay: 5
-    timeout: 30
+    timeout: 300
   with_items: "{{osp_floating_ip.results}}"
