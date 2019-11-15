@@ -4,14 +4,16 @@
   - name: OpenStack servers
     os_server_facts:
      cloud: ospcloud
-     server: 'frontend'
+     server: frontend
     register: openstack_info
     tags:
       - osp.smoke
-  - name: Curl website
 
-  - name: Fail if 'Ansible has done its job' is not in the page content
-    fail:
-    when: "'Ansible has done its job' not in webpage.results[0].content"
+  - name: Check that a page returns a status 200 and fail if the word is not in the page contents
+    uri:
+      url: "{{openstack_info.ansible_facts.openstack_servers[0].public_v4}}"
+      return_content: yes
+    register: this
+    failed_when: "'Ansible has done its job' not in this.content"
     tags:
       - osp.smoke
